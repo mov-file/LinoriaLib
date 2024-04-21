@@ -44,7 +44,7 @@ local Library = {
     DependencyBoxes = {};
 
     Signals = {};
-    LinoriaLib = ScreenGui;
+    ScreenGui = LinoriaLib;
 };
 
 local RainbowStep = 0
