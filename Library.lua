@@ -11,12 +11,11 @@ local Mouse = LocalPlayer:GetMouse();
 
 local ProtectGui = protectgui or (syn and syn.protect_gui) or (function() end);
 
-local LinoriaLib = Instance.new('ScreenGui');
-LinoriaLib.Name = "LinoriaLib"
-ProtectGui(LinoriaLib);
+local ScreenGui = Instance.new('ScreenGui');
+ProtectGui(ScreenGui);
 
-LinoriaLib.ZIndexBehavior = Enum.ZIndexBehavior.Global;
-LinoriaLib.Parent = CoreGui;
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
+ScreenGui.Parent = CoreGui;
 
 local Toggles = {};
 local Options = {};
@@ -44,7 +43,7 @@ local Library = {
     DependencyBoxes = {};
 
     Signals = {};
-    ScreenGui = LinoriaLib;
+    ScreenGui = ScreenGui;
 };
 
 local RainbowStep = 0
@@ -198,7 +197,7 @@ function Library:AddToolTip(InfoStr, HoverInstance)
 
         Size = UDim2.fromOffset(X + 5, Y + 4),
         ZIndex = 100,
-        Parent = Library.LinoriaLib,
+        Parent = Library.ScreenGui,
 
         Visible = false,
     })
@@ -392,14 +391,14 @@ function Library:Unload()
         Library.OnUnload()
     end
 
-    LinoriaLib:Destroy()
+    ScreenGui:Destroy()
 end
 
 function Library:OnUnload(Callback)
     Library.OnUnload = Callback
 end
 
-Library:GiveSignal(LinoriaLib.DescendantRemoving:Connect(function(Instance)
+Library:GiveSignal(ScreenGui.DescendantRemoving:Connect(function(Instance)
     if Library.RegistryMap[Instance] then
         Library:RemoveFromRegistry(Instance);
     end;
@@ -466,7 +465,7 @@ do
             Size = UDim2.fromOffset(230, Info.Transparency and 271 or 253);
             Visible = false;
             ZIndex = 15;
-            Parent = LinoriaLib,
+            Parent = ScreenGui,
         });
 
         DisplayFrame:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
@@ -675,7 +674,7 @@ do
                 ZIndex = 14,
 
                 Visible = false,
-                Parent = LinoriaLib
+                Parent = ScreenGui
             })
 
             ContextMenu.Inner = Library:Create('Frame', {
@@ -1061,7 +1060,7 @@ do
             Size = UDim2.new(0, 60, 0, 45 + 2);
             Visible = false;
             ZIndex = 14;
-            Parent = LinoriaLib;
+            Parent = ScreenGui;
         });
 
         ToggleLabel:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
@@ -2271,7 +2270,7 @@ do
             BorderColor3 = Color3.new(0, 0, 0);
             ZIndex = 20;
             Visible = false;
-            Parent = LinoriaLib;
+            Parent = ScreenGui;
         });
 
         local function RecalculateListPosition()
@@ -2686,7 +2685,7 @@ do
         Position = UDim2.new(0, 0, 0, 40);
         Size = UDim2.new(0, 300, 0, 200);
         ZIndex = 100;
-        Parent = LinoriaLib;
+        Parent = ScreenGui;
     });
 
     Library:Create('UIListLayout', {
@@ -2702,7 +2701,7 @@ do
         Size = UDim2.new(0, 213, 0, 20);
         ZIndex = 200;
         Visible = false;
-        Parent = LinoriaLib;
+        Parent = ScreenGui;
     });
 
     local WatermarkInner = Library:Create('Frame', {
@@ -2767,7 +2766,7 @@ do
         Size = UDim2.new(0, 210, 0, 20);
         Visible = false;
         ZIndex = 100;
-        Parent = LinoriaLib;
+        Parent = ScreenGui;
     });
 
     local KeybindInner = Library:Create('Frame', {
@@ -2968,7 +2967,7 @@ function Library:CreateWindow(...)
         Size = Config.Size,
         Visible = false;
         ZIndex = 1;
-        Parent = LinoriaLib;
+        Parent = ScreenGui;
     });
 
     Library:MakeDraggable(Outer, 25);
@@ -3501,7 +3500,7 @@ function Library:CreateWindow(...)
         Visible = true;
         Text = '';
         Modal = false;
-        Parent = LinoriaLib;
+        Parent = ScreenGui;
     });
 
     local TransparencyCache = {};
@@ -3537,7 +3536,7 @@ function Library:CreateWindow(...)
                 CursorOutline.Color = Color3.new(0, 0, 0);
                 CursorOutline.Visible = true;
 
-                while Toggled and LinoriaLib.Parent do
+                while Toggled and ScreenGui.Parent do
                     InputService.MouseIconEnabled = false;
 
                     local mPos = InputService:GetMouseLocation();
